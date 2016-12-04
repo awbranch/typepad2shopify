@@ -17,6 +17,8 @@
   "dependencies": {
     "async": "^2.1.4",
     "cheerio": "^0.22.0",
+    "file-type": "^3.9.0",
+    "read-chunk": "^2.0.0",
     "yargs": "^6.4.0"
   }
 }

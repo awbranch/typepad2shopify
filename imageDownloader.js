@@ -6,7 +6,7 @@ const url = require('url');
 const path = require('path');
 	
 function downloadImages(source, dest) {
-	console.log("Download Images: " + source + " -> " + dest);
+	console.log('Download Images: ' + source + ' -> ' + dest);
 	
 	const articles = JSON.parse(fs.readFileSync(source, 'utf-8'));
 	
@@ -21,7 +21,7 @@ function downloadImages(source, dest) {
 	let downloadArr = [];
 	articles.forEach(article => {
 		let $ = cheerio.load(article.body);
-		$("img").each(function() {
+		$('img').each(function() {
 			
 			let img = $(this);
 			let src = img.attr('src');
@@ -51,7 +51,7 @@ function downloadImages(source, dest) {
 		console.log(`Downloading Image: ${item.src}`);
 		download(item.srcUrl, item.filePath, cb);
 	}, function done() {
-		console.log("Download Complete");
+		console.log('Download Complete');
 	});
 }
 

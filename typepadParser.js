@@ -14,18 +14,18 @@ function toJson(source, dest) {
 		
 		article = {};
 		
-		article.author = readPair(lines, i++, "AUTHOR");
-		article.authorEmail = readPair(lines, i++, "AUTHOR EMAIL");
-		article.title = readPair(lines, i++, "TITLE");
-		article.status = readPair(lines, i++, "STATUS");
-		article.allowComments = readPair(lines, i++, "ALLOW COMMENTS");
-		article.convertBreaks = readPair(lines, i++, "CONVERT BREAKS");
-		article.allowPings = readPair(lines, i++, "ALLOW PINGS");
-		article.basenane = readPair(lines, i++, "BASENAME");
+		article.author = readPair(lines, i++, 'AUTHOR');
+		article.authorEmail = readPair(lines, i++, 'AUTHOR EMAIL');
+		article.title = readPair(lines, i++, 'TITLE');
+		article.status = readPair(lines, i++, 'STATUS');
+		article.allowComments = readPair(lines, i++, 'ALLOW COMMENTS');
+		article.convertBreaks = readPair(lines, i++, 'CONVERT BREAKS');
+		article.allowPings = readPair(lines, i++, 'ALLOW PINGS');
+		article.basenane = readPair(lines, i++, 'BASENAME');
 		
 		article.categories = [];
 		let category;
-		while((category = readPair(lines, i, "CATEGORY", false)) !== null) {
+		while((category = readPair(lines, i, 'CATEGORY', false)) !== null) {
 			article.categories.push(category);
 			i++;
 		}
@@ -33,62 +33,62 @@ function toJson(source, dest) {
 		// Read the blank line after CATEGORY
 		readTag(lines, i++, "");
 		
-		article.uniqueUrl = readPair(lines, i++, "UNIQUE URL");
-		article.date = readPair(lines, i++, "DATE");
+		article.uniqueUrl = readPair(lines, i++, 'UNIQUE URL');
+		article.date = readPair(lines, i++, 'DATE');
 		
-		readTag(lines, i++, "-----");
-		readTag(lines, i++, "BODY:");
+		readTag(lines, i++, '-----');
+		readTag(lines, i++, 'BODY:');
 		let readInfo = readTextBlock(lines, i);
 		article.body = readInfo.text;
 		i+= readInfo.linesRead;
 		
-		readTag(lines, i++, "EXTENDED BODY:");
+		readTag(lines, i++, 'EXTENDED BODY:');
 		readInfo = readTextBlock(lines, i);
 		article.extendedBody = readInfo.text;
 		i+= readInfo.linesRead;
 		
-		readTag(lines, i++, "EXCERPT:");
+		readTag(lines, i++, 'EXCERPT:');
 		readInfo = readTextBlock(lines, i);
 		article.exerpt = readInfo.text;
 		i+= readInfo.linesRead;
 		
-		readTag(lines, i++, "KEYWORDS:");
+		readTag(lines, i++, 'KEYWORDS:');
 		readInfo = readTextBlock(lines, i);
 		article.keyWords = readInfo.text;
 		i+= readInfo.linesRead;
 		
 		article.comments = [];
-		while(readTag(lines, i, "COMMENT:", false) !== null) {
+		while(readTag(lines, i, 'COMMENT:', false) !== null) {
 			i++;
 			let comment = {};
 			article.comments.push(comment);
 			
-			comment.author = readPair(lines, i++, "AUTHOR");
-			comment.email = readPair(lines, i++, "EMAIL");
-			comment.ip = readPair(lines, i++, "IP");
-			comment.url = readPair(lines, i++, "URL");
-			comment.date = readPair(lines, i++, "DATE");
+			comment.author = readPair(lines, i++, 'AUTHOR');
+			comment.email = readPair(lines, i++, 'EMAIL');
+			comment.ip = readPair(lines, i++, 'IP');
+			comment.url = readPair(lines, i++, 'URL');
+			comment.date = readPair(lines, i++, 'DATE');
 			readInfo = readTextBlock(lines, i);
 			comment.message = readInfo.text;
 			i+= readInfo.linesRead;
 		}
 		
 		article.pings = [];
-		while(readTag(lines, i, "PING:", false) !== null) {
+		while(readTag(lines, i, 'PING:', false) !== null) {
 			i++;
 			let ping = {};
 			article.pings.push(ping);
-			ping.title = readPair(lines, i++, "TITLE");
-			ping.url = readPair(lines, i++, "URL");
-			ping.ip = readPair(lines, i++, "IP");
-			ping.blogName = readPair(lines, i++, "BLOG NAME");
-			ping.date = readPair(lines, i++, "DATE");
+			ping.title = readPair(lines, i++, 'TITLE');
+			ping.url = readPair(lines, i++, 'URL');
+			ping.ip = readPair(lines, i++, 'IP');
+			ping.blogName = readPair(lines, i++, 'BLOG NAME');
+			ping.date = readPair(lines, i++, 'DATE');
 			readInfo = readTextBlock(lines, i);
 			ping.message = readInfo.text;
 			i+= readInfo.linesRead;
 		}
 		
-		readTag(lines, i++, "--------");
+		readTag(lines, i++, '--------');
 		
 		articles.push(article);
 		
@@ -145,9 +145,9 @@ function readTextBlock(lines, index) {
 	for (let i=index; i < lines.length; i++) {
 		
 		let line = lines[i];
-		if(line === "-----") {
+		if(line === '-----') {
 			return {
-				text: textArr.join("\n"),
+				text: textArr.join('\n'),
 				linesRead: textArr.length + 1
 			}
 		} else {
