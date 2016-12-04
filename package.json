@@ -1,0 +1,20 @@
+{
+  "name": "typepad2shopify",
+  "version": "0.0.1",
+  "description": "Tools for converting a Typepad blog to Shopify",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "typepad",
+    "shopify",
+    "blog",
+    "converter"
+  ],
+  "author": "Andrew Branch <awbranch@gmail.com> (http://www.branchhomestead.com)",
+  "license": "MIT",
+  "dependencies": {
+    "yargs": "^6.4.0"
+  }
+}
