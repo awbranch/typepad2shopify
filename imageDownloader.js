@@ -4,6 +4,7 @@ const cheerio = require('cheerio');
 const async = require('async');
 const url = require('url');
 const path = require('path');
+const {getUrl, getUrlFilePart} = require('./utils');
 	
 function downloadImages(source, dest) {
 	console.log('Download Images: ' + source + ' -> ' + dest);
@@ -25,22 +26,20 @@ function downloadImages(source, dest) {
 			
 			let img = $(this);
 			let src = img.attr('src');
-			let srcUrl;
-			try {
-				srcUrl = url.parse(src);
-			}
-			catch(err) {
-				console.log(`Error parsing URL: ${src} - ${err.message}`);
+			
+			let srcUrl = getUrl(src);
+			if(!srcUrl) {
+				console.log(`Image src URL is invalid: ${src}`);
 				process.exit(1);
 			}
 			
-			let srcPath = srcUrl.pathname.split('/');
-			if(srcPath.length <= 0) {
-				console.log(`Invalid path: ${src}`);
+			let filePart = getUrlFilePart(srcUrl);
+			if(!filePart) {
+				console.log(`Image src URL has invalid file part: ${src}`);
 				process.exit(1);
 			}
 			
-			let filePath = path.join(dest, srcPath[srcPath.length-1]);
+			let filePath = path.join(dest, filePart);
 			
 			downloadArr.push({img, src, srcUrl, filePath});
 			

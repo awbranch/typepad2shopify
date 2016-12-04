@@ -21,7 +21,7 @@ function toJson(source, dest) {
 		article.allowComments = readPair(lines, i++, 'ALLOW COMMENTS');
 		article.convertBreaks = readPair(lines, i++, 'CONVERT BREAKS');
 		article.allowPings = readPair(lines, i++, 'ALLOW PINGS');
-		article.basenane = readPair(lines, i++, 'BASENAME');
+		article.baseName = readPair(lines, i++, 'BASENAME');
 		
 		article.categories = [];
 		let category;
@@ -91,6 +91,8 @@ function toJson(source, dest) {
 		readTag(lines, i++, '--------');
 		
 		articles.push(article);
+		
+		console.log("Parsed: " + article.baseName + " - " + article.date);
 		
 		// Are we at the end?
 		if(endCheck(lines, i)) {

@@ -12,11 +12,12 @@ let argv = require('yargs')
 		.command('download-images <source> <dir>', 'Downloads images in source and writes them to dir')
 		.example('$0 download-images blog.json MyBlogImages/', 'Downloads all images blog.json to the directory MyBlogImages')
 		
-		.command('move-images <source> <newRoot>', 'Sets the images source URL to the specified newRoot')
-		.example('$0 move-images blog.json http://www.myhost.com/', 'Sets the url of all images in blog.json to http://www.myhost.com/')
+		.command('move-images <source> <dest> <newRoot>', 'Sets the ima src URLs source to the specified newRoot and writes to dest')
+		.example('$0 move-images blog.json blog-new.json http://www.myhost.com/assets/images/',
+						 'Sets the url of all images in blog.json to http://www.myhost.com/assets/images/ and writes the results to blog-new.json')
 		
 		.command('rename-images <source>', "")
-		.demand(1, 2)
+		.demand(1)
 		.strict()
 		.wrap(130)
 		.argv;
@@ -33,7 +34,7 @@ switch(command) {
 		break;
 		
 	case 'move-images':
-		imageMover(argv.source, argv.newRoot);
+		imageMover(argv.source, argv.dest, argv.newRoot);
 		break;
 }
 
