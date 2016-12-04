@@ -12,7 +12,7 @@
     "blog",
     "converter"
   ],
-  "author": "Andrew Branch <awbranch@gmail.com> (http://www.branchhomestead.com)",
+  "author": "Andrew Branch (http://www.branchhomestead.com)",
   "license": "MIT",
   "dependencies": {
     "yargs": "^6.4.0"
