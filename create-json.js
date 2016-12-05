@@ -1,5 +1,19 @@
 const fs = require('fs');
 
+const argv = require('yargs')
+		.usage('This script will reads in a Typepad and writes it to a JSON file that can be used by all the other scripts.\n\n' +
+				'Usage:   $0 <source> <dest>\n\n' +
+				'Example: $0 typepad.txt blog.json\n' +
+				'         Read typepad.txt and write blog.json.')
+		.demand(2)
+		.wrap(null)
+		.strict()
+		.argv;
+
+let source = argv._[0];
+let dest = argv._[1];
+toJson(source, dest);
+
 function toJson(source, dest) {
 	
 	let text = fs.readFileSync(source, 'ascii');
@@ -172,5 +186,3 @@ function endCheck(lines, i) {
 	
 	return true;
 }
-
-module.exports = toJson;

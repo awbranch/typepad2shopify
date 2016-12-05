@@ -5,7 +5,22 @@ const async = require('async');
 const url = require('url');
 const path = require('path');
 const {getUrl, getUrlFilePart} = require('./utils');
-	
+
+const argv = require('yargs')
+		.usage('This script reads the JSON script created by create-json.js and downloads all the images found and writes\n' +
+				'them out to the specified directory.\n\n' +
+				'Usage:   $0 <source-json> <directory>\n\n' +
+		    'Example: $0 blog.json MyBlogImages/\n' +
+		    '         Downloads images in blog.json to MyBlogImages/ directory.')
+		.demand(2)
+		.wrap(null)
+		.strict()
+		.argv;
+
+let source = argv._[0];
+let dest = argv._[1];
+downloadImages(source, dest);
+
 function downloadImages(source, dest) {
 	console.log('Download Images: ' + source + ' -> ' + dest);
 	
@@ -67,5 +82,3 @@ function download(url, dest, cb) {
 		if (cb) cb(err.message);
 	});
 }
-
-module.exports = downloadImages;
