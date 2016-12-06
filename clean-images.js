@@ -135,5 +135,3 @@ function moveImages(source, dest, newRoot, extDir) {
 
 	console.log(`Success: wrote: ${dest}`);
 }
-
-module.exports = moveImages;
