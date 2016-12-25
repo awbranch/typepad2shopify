@@ -10,8 +10,8 @@ const fileType = require('file-type');
 const {isUrl, getUrl, getUrlFilePart} = require('./utils');
 
 const argv = require('yargs')
-		.usage("This performs operations on all the img tags in the source-json and writes the results to the dest-json file\n\n" +
-				"Usage:     $0 <source-json> <dest-json> [options]\n\n" +
+		.usage("This performs operations on all the img tags in the source json and writes the results to the dest file\n\n" +
+				"Usage:     $0 <source> <dest> [options]\n\n" +
 						
 				"Example 1: $0 blog.json blog-new.json -root http://www.myhost.com/assets/images/\n" +
 				"           Sets the url of all images in blog.json to http://www.myhost.com/assets/images/\n\n" +
