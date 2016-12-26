@@ -10,7 +10,7 @@ const argv = require('yargs')
 		    '         Writes blog.json to Shopfiy where mystore is your Shopify store name, your api key is xxx and ' +
 				'         password is yyy and zzz is your blog id.' +
 		    '         You\'ll need to get the API key, password and blog id from Shopify. See the README.md for details')
-		.demand(3)
+		.demand(5)
 		.wrap(null)
 		.strict()
 		.argv;
