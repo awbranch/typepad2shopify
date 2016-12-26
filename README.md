@@ -117,10 +117,10 @@ This script will upload the blog that you've prepared with the other scripts to 
 **Second:** You need to get the ID for the blog. This is a unique numeric identifier for your blog. There are a couple 
 ways to find it. 
 
-Option 1: If you go to Shopify > Online Store > Blog Posts > ... > Manage Blogs > {Your Blog} you'll see the id
+- Option 1: If you go to Shopify > Online Store > Blog Posts > ... > Manage Blogs > {Your Blog} you'll see the id
 in the URL, for example: https://myblogname.myshopify.com/admin/blogs/12345678.
 
-Option 2: Run the script list-blogs.js
+- Option 2: Run the script list-blogs.js
 
 **Third:** Get Shopify API Credentials. Before you can run this script you need to create 
 [private app credentials](https://help.shopify.com/api/guides/api-credentials#generate-private-app-credentials) 
