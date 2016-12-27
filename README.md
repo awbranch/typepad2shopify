@@ -53,7 +53,7 @@ This will create a txt file with a format similar to the following:
 **Example**
 Read typepad.txt and write blog.json                            
          
-	node read-typepad.js typepad.txt blog.json
+	node read-typepad typepad.txt blog.json
 
 ## download-images.js
 
@@ -73,7 +73,7 @@ This command will search the text and find the img src and download the image to
 **Example:**
 Downloads any images found in blog.json (created via read-typepad.js) and writes them to the directory MyBlogImages/ 
 
-	node download-images.js blog.json MyBlogImages/
+	node download-images blog.json MyBlogImages/
  
  
 ## remap-images.js

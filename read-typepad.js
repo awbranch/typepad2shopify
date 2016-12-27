@@ -12,113 +12,109 @@ const argv = require('yargs')
 
 let source = argv._[0];
 let dest = argv._[1];
-toJson(source, dest);
+	
+let text = fs.readFileSync(source, 'ascii');
+let lines = text.split('\n');
 
-function toJson(source, dest) {
+let articles = [];
+let article;
+
+let i = 0;
+
+while(i < lines.length) {
 	
-	let text = fs.readFileSync(source, 'ascii');
-	let lines = text.split('\n');
+	article = {};
 	
-	let articles = [];
-	let article;
+	article.author = readPair(lines, i++, 'AUTHOR');
+	article.authorEmail = readPair(lines, i++, 'AUTHOR EMAIL');
+	article.title = readPair(lines, i++, 'TITLE');
+	article.status = readPair(lines, i++, 'STATUS');
+	article.allowComments = readPair(lines, i++, 'ALLOW COMMENTS');
+	article.convertBreaks = readPair(lines, i++, 'CONVERT BREAKS');
+	article.allowPings = readPair(lines, i++, 'ALLOW PINGS');
+	article.baseName = readPair(lines, i++, 'BASENAME');
 	
-	let i = 0;
-	
-	while(i < lines.length) {
-		
-		article = {};
-		
-		article.author = readPair(lines, i++, 'AUTHOR');
-		article.authorEmail = readPair(lines, i++, 'AUTHOR EMAIL');
-		article.title = readPair(lines, i++, 'TITLE');
-		article.status = readPair(lines, i++, 'STATUS');
-		article.allowComments = readPair(lines, i++, 'ALLOW COMMENTS');
-		article.convertBreaks = readPair(lines, i++, 'CONVERT BREAKS');
-		article.allowPings = readPair(lines, i++, 'ALLOW PINGS');
-		article.baseName = readPair(lines, i++, 'BASENAME');
-		
-		article.categories = [];
-		let category;
-		while((category = readPair(lines, i, 'CATEGORY', false)) !== null) {
-			article.categories.push(category);
-			i++;
-		}
-		
-		// Read the blank line after CATEGORY
-		readTag(lines, i++, "");
-		
-		article.uniqueUrl = readPair(lines, i++, 'UNIQUE URL');
-		article.date = readPair(lines, i++, 'DATE');
-		
-		readTag(lines, i++, '-----');
-		readTag(lines, i++, 'BODY:');
-		let readInfo = readTextBlock(lines, i);
-		article.body = readInfo.text;
-		i+= readInfo.linesRead;
-		
-		readTag(lines, i++, 'EXTENDED BODY:');
-		readInfo = readTextBlock(lines, i);
-		article.extendedBody = readInfo.text;
-		i+= readInfo.linesRead;
-		
-		readTag(lines, i++, 'EXCERPT:');
-		readInfo = readTextBlock(lines, i);
-		article.exerpt = readInfo.text;
-		i+= readInfo.linesRead;
-		
-		readTag(lines, i++, 'KEYWORDS:');
-		readInfo = readTextBlock(lines, i);
-		article.keyWords = readInfo.text;
-		i+= readInfo.linesRead;
-		
-		article.comments = [];
-		while(readTag(lines, i, 'COMMENT:', false) !== null) {
-			i++;
-			let comment = {};
-			article.comments.push(comment);
-			
-			comment.author = readPair(lines, i++, 'AUTHOR');
-			comment.email = readPair(lines, i++, 'EMAIL');
-			comment.ip = readPair(lines, i++, 'IP');
-			comment.url = readPair(lines, i++, 'URL');
-			comment.date = readPair(lines, i++, 'DATE');
-			readInfo = readTextBlock(lines, i);
-			comment.message = readInfo.text;
-			i+= readInfo.linesRead;
-		}
-		
-		article.pings = [];
-		while(readTag(lines, i, 'PING:', false) !== null) {
-			i++;
-			let ping = {};
-			article.pings.push(ping);
-			ping.title = readPair(lines, i++, 'TITLE');
-			ping.url = readPair(lines, i++, 'URL');
-			ping.ip = readPair(lines, i++, 'IP');
-			ping.blogName = readPair(lines, i++, 'BLOG NAME');
-			ping.date = readPair(lines, i++, 'DATE');
-			readInfo = readTextBlock(lines, i);
-			ping.message = readInfo.text;
-			i+= readInfo.linesRead;
-		}
-		
-		readTag(lines, i++, '--------');
-		
-		articles.push(article);
-		
-		console.log("Parsed: " + article.baseName + " - " + article.date);
-		
-		// Are we at the end?
-		if(endCheck(lines, i)) {
-			break;
-		}
+	article.categories = [];
+	let category;
+	while((category = readPair(lines, i, 'CATEGORY', false)) !== null) {
+		article.categories.push(category);
+		i++;
 	}
 	
-	// Write articles to dest
-	fs.writeFileSync(dest, JSON.stringify(articles, null, '\t'));
+	// Read the blank line after CATEGORY
+	readTag(lines, i++, "");
 	
-	console.log(`Success: wrote: ${dest}`);
+	article.uniqueUrl = readPair(lines, i++, 'UNIQUE URL');
+	article.date = readPair(lines, i++, 'DATE');
+	
+	readTag(lines, i++, '-----');
+	readTag(lines, i++, 'BODY:');
+	let readInfo = readTextBlock(lines, i);
+	article.body = readInfo.text;
+	i+= readInfo.linesRead;
+	
+	readTag(lines, i++, 'EXTENDED BODY:');
+	readInfo = readTextBlock(lines, i);
+	article.extendedBody = readInfo.text;
+	i+= readInfo.linesRead;
+	
+	readTag(lines, i++, 'EXCERPT:');
+	readInfo = readTextBlock(lines, i);
+	article.exerpt = readInfo.text;
+	i+= readInfo.linesRead;
+	
+	readTag(lines, i++, 'KEYWORDS:');
+	readInfo = readTextBlock(lines, i);
+	article.keyWords = readInfo.text;
+	i+= readInfo.linesRead;
+	
+	article.comments = [];
+	while(readTag(lines, i, 'COMMENT:', false) !== null) {
+		i++;
+		let comment = {};
+		article.comments.push(comment);
+		
+		comment.author = readPair(lines, i++, 'AUTHOR');
+		comment.email = readPair(lines, i++, 'EMAIL');
+		comment.ip = readPair(lines, i++, 'IP');
+		comment.url = readPair(lines, i++, 'URL');
+		comment.date = readPair(lines, i++, 'DATE');
+		readInfo = readTextBlock(lines, i);
+		comment.message = readInfo.text;
+		i+= readInfo.linesRead;
+	}
+	
+	article.pings = [];
+	while(readTag(lines, i, 'PING:', false) !== null) {
+		i++;
+		let ping = {};
+		article.pings.push(ping);
+		ping.title = readPair(lines, i++, 'TITLE');
+		ping.url = readPair(lines, i++, 'URL');
+		ping.ip = readPair(lines, i++, 'IP');
+		ping.blogName = readPair(lines, i++, 'BLOG NAME');
+		ping.date = readPair(lines, i++, 'DATE');
+		readInfo = readTextBlock(lines, i);
+		ping.message = readInfo.text;
+		i+= readInfo.linesRead;
+	}
+	
+	readTag(lines, i++, '--------');
+	
+	articles.push(article);
+	
+	console.log("Parsed: " + article.baseName + " - " + article.date);
+	
+	// Are we at the end?
+	if(endCheck(lines, i)) {
+		break;
+	}
 }
+
+// Write articles to dest
+fs.writeFileSync(dest, JSON.stringify(articles, null, '\t'));
+
+console.log(`Success: wrote: ${dest}`);
 
 function readTag(lines, i, value, strict) {
 	strict = strict === undefined ? true : strict;

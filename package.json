@@ -18,6 +18,7 @@
     "async": "^2.1.4",
     "cheerio": "^0.22.0",
     "file-type": "^3.9.0",
+    "fs-extra": "^1.0.0",
     "read-chunk": "^2.0.0",
     "request": "^2.79.0",
     "yargs": "^6.4.0"
