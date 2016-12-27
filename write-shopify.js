@@ -64,7 +64,6 @@ function storeBlog(source, storeName, apiKey, password, blogId) {
 		console.log(`Writing Article: ${art.article.title}`);
 		
 		console.log("--------------------");
-		console.log(postUrl);
 		console.log(JSON.stringify(art));
 		console.log("--------------------");
 		
